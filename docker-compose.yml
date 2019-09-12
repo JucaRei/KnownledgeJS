@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    image: postgres:10.10-alpine
+  backend:
+    image: node:10.16.3-alpine
+    volumes:
+      - ./backend:/backend
+    ports:
+      - 3000:3000
+    command: sh -c "cd /backend && npm i && npm start"
+# networks:
+#   bancorl:
+#   banconrl:
+#   frontend:
+#   backend:

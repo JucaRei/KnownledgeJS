@@ -1,3 +1,20 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#2B3016",
+        "titleBar.activeBackground": "#3C431F",
+        "titleBar.activeForeground": "#FAFBF6"
+    },
+    "sqltools.connections": [
+        {
+            "askForPassword": true,
+            "connectionTimeout": 30,
+            "database": "knowledge_final",
+            "dialect": "PostgreSQL",
+            "name": "postgres",
+            "port": 5432,
+            "server": "127.0.0.1",
+            "username": "postgres"
+        }
+    ]
 }
