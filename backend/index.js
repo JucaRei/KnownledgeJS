@@ -8,10 +8,11 @@ app.db = db;
 //ajuda a fazer as dependencias dentro da aplicação(por exemplo require...)
 consign()
   .then("./config/middlewares.js")
+  .then("./api/validator.js")
   .then("./api")
   .then("./config/routes.js")
   .into(app); // cada uma das dependências ele vai injetar como parâmetro o app
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Backend em execução2...");
 });

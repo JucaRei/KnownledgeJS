@@ -2,13 +2,18 @@ version: "3"
 services:
   db:
     image: postgres:10.10-alpine
+    environment: 
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "200291" 
+    ports: 
+      - 5432:5432
   backend:
     image: node:10.16.3-alpine
     volumes:
       - ./backend:/backend
     ports:
       - 3000:3000
-    command: sh -c "cd /backend && npm i && npm start"
+    command: sh -c "cd /backend && npm i && npm i -g knex && knex migration:latest"
 # networks:
 #   bancorl:
 #   banconrl:
