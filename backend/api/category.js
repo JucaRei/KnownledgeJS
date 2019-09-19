@@ -105,5 +105,25 @@ module.exports = app => {
       .then(category => res.json(category))
       .catch(err => res.status(500).send(err));
   };
-  return { save, remove, get, getById };
+
+  //transformar um Array de categorias em uma estrutura de arvore
+  // gerar a partir de todas as categorias que não tem pai.
+  const toTree = (categories, tree) => {
+    if (!tree) tree = categories.filter(c => !c.parentId)
+    tree = tree.map(parentNode => {
+      const isChild = node => node.parentId == parentNode.id
+      parentNode.children = toTree(categories, categories.filter(isChild))  // pega somente os filhos diretos de uma determinada categoria
+      return parentNode
+    })
+    return tree
+  }
+
+  // serviço da arvore de categorias
+  const getTree = (req, res) => {
+    app.db('categories')
+      .then(categories => res.json(toTree(withPath(categories))))
+      .catch(err => res.status(500).send(err))
+  }
+
+  return { save, remove, get, getById, getTree };
 };
