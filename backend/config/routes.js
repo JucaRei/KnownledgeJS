@@ -35,4 +35,8 @@ module.exports = app => {
     .get(app.api.article.getById)
     .put(app.api.article.save)
     .delete(app.api.article.remove)
+
+  // o codigo esta em article , embora a url use categorias
+  app.route('/categories/:id/articles')
+    .get(app.api.article.getByCategory)
 };
