@@ -7,6 +7,7 @@ app.db = db;
 
 //ajuda a fazer as dependencias dentro da aplicação(por exemplo require...)
 consign()
+  .include("./config/passport.js")
   .then("./config/middlewares.js")
   .then("./api/validator.js")
   .then("./api")
