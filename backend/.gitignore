@@ -1,2 +1,5 @@
 node_modules
 env_file
+.vscode
+.env
+.DS_Store
