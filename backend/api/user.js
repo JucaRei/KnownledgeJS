@@ -14,6 +14,10 @@ module.exports = app => {
     const user = { ...req.body }; // novo usuario / req.body pega o corpo da requisição (body-parser)
     if (req.params.id) user.id = req.params.id; // alterar usuário
 
+    // novo usuario que se cadastrou, obrigatoriamente não sera um admin
+    if (!req.originalUrl.startsWith('/users')) user.admin = false
+    if (!req.user || !req.user.admin) user.admin = false
+
     try {
       //validações
       existsOrError(user.name, "Nome não informado");
