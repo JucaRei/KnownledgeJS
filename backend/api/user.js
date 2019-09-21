@@ -45,6 +45,7 @@ module.exports = app => {
         .db("users")
         .update(user)
         .where({ id: user.id })
+        .whereNull('deletedAt')
         .then(_ => res.status(204).send())
         .catch(err => res.status(500).send(err));
     } else {
@@ -57,10 +58,12 @@ module.exports = app => {
   };
 
   //pega uma lista de usuários
+  // whereNull - pega todos os usuários onde essa coluna é nula(não foram excluidos)
   const get = (req, res) => {
     app
       .db("users")
       .select("id", "name", "email", "admin")
+      .whereNull('deletedAt')
       .then(users => res.json(users))
       .catch(err => res.status(500).send(err));
   };
@@ -74,6 +77,28 @@ module.exports = app => {
       .then(user => res.json(user))
       .catch(err => res.status(500).send(err));
   };
+
+  // soft delete - do banco não é excluido, mas no sistema ele não aparece mais
+  // não pode excluir se usuário tem artigos associados, primeiramente tem que ir lá nos artigos e desassociar o usuário desse artigo,
+  // para depois sim poder ser excluido
+  const remove = async (req, res) => {
+    try {
+      const articles = await app.db('articles')
+        .where({ userId: req.params.id })
+      notExistsOrError(articles, 'Usuário possui artigos.')
+
+      const rowsUpdated = await app.db('users')
+        .update({ deletedAt: new Date() })
+        .where({ id: req.params.id })
+      existsOrError(rowsUpdated, 'Usuário não foi encontrado.')
+
+      res.status(204).send()
+    } catch (msg) {
+      res.status(400).send(msg)
+    }
+  }
+
+
   // first - apenas 1 unico usuário
-  return { save, get, getById };
+  return { save, get, getById, remove };
 };
