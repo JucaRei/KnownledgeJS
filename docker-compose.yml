@@ -1,21 +1,55 @@
 version: "3"
+networks:
+  banco:
+  banco1:
+  frontend:
+  backend:
 services:
   db:
     image: postgres:10.10-alpine
-    environment: 
+    environment:
       POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "200291" 
-    ports: 
-      - 5432:5432
+      POSTGRES_PASSWORD: "123"
+    ports:
+      - 5433:5432
+    networks:
+      - banco
+  db1:
+    image: mvertes/alpine-mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ""
+      MONGO_INITDB_ROOT_PASSWORD: ""
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 27017:27017
+    networks:
+      - banco1
+  frontend:
+    image: node:10.16.3-alpine
+    volumes:
+      - ./frontend:/frontend
+    command: sh -c "cd /frontend && npm i && npm run serve"
+    ports:
+      - 8080:8080
+    networks:
+      - frontend
+    depends_on:
+      - backend
   backend:
     image: node:10.16.3-alpine
     volumes:
       - ./backend:/backend
+    working_dir: /backend
     ports:
       - 3000:3000
     command: sh -c "cd /backend && npm i && npm i -g knex && knex migration:latest"
-# networks:
-#   bancorl:
-#   banconrl:
-#   frontend:
-#   backend:
+    networks:
+      - backend
+      - banco
+      - banco1
+      - frontend
+    depends_on:
+      - db
+      - db1
