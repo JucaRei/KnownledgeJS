@@ -1,7 +1,10 @@
 {
     "git.ignoreLimitWarning": true,
     "workbench.colorCustomizations": {
-        "tab.unfocusedActiveBorder": "#fff0"
+        "tab.unfocusedActiveBorder": "#fff0",
+        "activityBar.background": "#2B3016",
+        "titleBar.activeBackground": "#3C431F",
+        "titleBar.activeForeground": "#FAFBF6"
     },
     "sqltools.connections": [
         {
