@@ -7,9 +7,13 @@ networks:
 services:
   db:
     image: postgres:10.10-alpine
+    container_name: "postgreSQL"
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "123"
+      POSTGRES_DB: "knowlegde"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5433:5432
     networks:
@@ -17,17 +21,16 @@ services:
   db1:
     image: mvertes/alpine-mongo:latest
     restart: always
+    container_name: "mongodb"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ""
-      MONGO_INITDB_ROOT_PASSWORD: ""
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+       MONGO_INITDB_DATABASE: "knowledge_stats"
     ports:
       - 27017:27017
     networks:
       - banco1
   frontend:
     image: node:10.16.3-alpine
+    container_name: "web"
     volumes:
       - ./frontend:/frontend
     command: sh -c "cd /frontend && npm i && npm run serve"
@@ -39,17 +42,21 @@ services:
       - backend
   backend:
     image: node:10.16.3-alpine
+    container_name: "applicacao"
     volumes:
       - ./backend:/backend
+      # Scripts instalar knex e rodar migrations
+      - ./backend/scripts/knex.sh:/scripts
     working_dir: /backend
-    ports:
+    ports: 
       - 3000:3000
-    command: sh -c "cd /backend && npm i && npm i -g knex && knex migration:latest"
+    command: sh -c "cd /backend && npm i && npm i -g knex && knex migration:latest && npm start"
     networks:
       - backend
       - banco
       - banco1
       - frontend
-    depends_on:
+    depends_on: 
       - db
       - db1
+
