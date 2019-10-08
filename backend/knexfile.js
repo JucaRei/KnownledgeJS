@@ -1,12 +1,31 @@
 //const { db } = require('./.env')
 
 // Update with your config settings.
+// module.exports = {
+//   client: "postgresql",
+//   connection: {
+//     database: "knowledge",
+//     user: "postgres",
+//     password: "200291"
+//   },
+//   pool: {
+//     min: 2,
+//     max: 10
+//   },
+//   migrations: {
+//     tableName: "knex_migrations"
+//   }
+// };
+
 module.exports = {
   client: "postgresql",
+  debug: true,
   connection: {
-    database: "knowledge",
+    host: "db",
+    database: "knownledge",
+    port: 54320,
     user: "postgres",
-    password: "200291"
+    password: "123",
   },
   pool: {
     min: 2,

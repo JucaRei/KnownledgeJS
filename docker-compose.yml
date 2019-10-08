@@ -1,9 +1,13 @@
 version: "3"
 networks:
   banco:
-  banco1:
+    driver: bridge
+  banconosql:
+    driver: bridge
   frontend:
+    driver: bridge
   backend:
+    driver: bridge
 services:
   db:
     image: postgres:10.10-alpine
@@ -11,23 +15,23 @@ services:
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "123"
-      POSTGRES_DB: "knowlegde"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      POSTGRES_DB: "knownledge"
+    # volumes:
+    #   - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 5433:5432
+      - 54320:5432
     networks:
       - banco
-  db1:
+  banconosql:
     image: mvertes/alpine-mongo:latest
     restart: always
     container_name: "mongodb"
     environment:
-       MONGO_INITDB_DATABASE: "knowledge_stats"
+      MONGO_INITDB_DATABASE: "knowledge_stats"
     ports:
       - 27017:27017
     networks:
-      - banco1
+      - banconosql
   frontend:
     image: node:10.16.3-alpine
     container_name: "web"
@@ -42,22 +46,24 @@ services:
       - backend
   backend:
     image: node:12.10.0-buster-slim
-    container_name: "applicacao"
+    container_name: "aplicacao"
     volumes:
       - ./backend:/backend
       # Scripts instalar knex e rodar migrations
       # - ./backend/scripts/knex.sh:/scripts
     working_dir: /backend
-    ports: 
+    ports:
       - 3000:3000
     # command: sh -c "cd /backend && npm i && npm i -g knex && knex migration:latest && npm start"
     command: bash -C 'knex.sh'
     networks:
       - backend
       - banco
-      - banco1
+      - banconosql
       - frontend
-    depends_on: 
+    depends_on:
       - db
-      - db1
-
+      - banconosql
+    links:
+      - db
+      - banconosql
