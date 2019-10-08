@@ -4,19 +4,19 @@
 
 <script>
 export default {
-    name: "Menu"
-}
+  name: "Menu"
+};
 </script>
 
 <style>
-    .menu {
-        grid-area: menu;
-        background: linear-gradient(to right, #232526, #414345);
+.menu {
+  grid-area: menu;
+  background: linear-gradient(to right, #2d3031, #255688);
 
-        display: flex;
-        /* direção na coluna */
-        flex-direction: column;
-        /* permitir quebra de linha */
-        flex-wrap: wrap;
-    }
+  display: flex;
+  /* direção na coluna */
+  flex-direction: column;
+  /* permitir quebra de linha */
+  flex-wrap: wrap;
+}
 </style>
