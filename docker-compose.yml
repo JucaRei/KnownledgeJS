@@ -33,29 +33,29 @@ services:
     networks:
       - banconosql
   frontend:
-    image: node:10.16.3-alpine
+    image: frontend:latest
     container_name: "web"
     volumes:
-      - ./frontend:/frontend
-    command: sh -c "cd /frontend && npm i && npm run serve"
+      - ./frontend:/app
+    # command: sh -c "cd /frontend && npm i && npm run serve"
     ports:
-      - 8080:8080
+      - 80:8080
     networks:
       - frontend
     depends_on:
       - backend
   backend:
-    image: node:12.10.0-buster-slim
+    image: backend:latest
     container_name: "aplicacao"
     volumes:
-      - ./backend:/backend
+      - . .
       # Scripts instalar knex e rodar migrations
       # - ./backend/scripts/knex.sh:/scripts
-    working_dir: /backend
+    # working_dir: /backend
     ports:
       - 3000:3000
     # command: sh -c "cd /backend && npm i && npm i -g knex && knex migration:latest && npm start"
-    command: bash -C 'knex.sh'
+    # command: bash -C 'knex.sh'
     networks:
       - backend
       - banco
