@@ -1,10 +1,14 @@
 <template>
-  <aside class="menu"></aside>
+  <aside class="menu" v-show="isMenuVisible"></aside>
 </template>
 
 <script>
+// importar uma função dentro do vuex, mapear um atributo da store dentro do componente
+import { mapState } from 'vuex'
+
 export default {
-  name: "Menu"
+  name: "Menu",
+  computed: mapState(['isMenuVisible'])
 };
 </script>
 

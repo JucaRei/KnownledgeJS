@@ -19,14 +19,18 @@ export default {
         // toogle não vai aparecer
         hideToggle: Boolean
     },
+    // icone toggle do font awesome
     computed: {
         icon() {
-            return "fa-angle-left"
+            // return "fa-angle-left"
+            // alternando o icone (um animação simple, de quando mostra ou não o menu)
+            return this.$store.state.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
         }
     },
     // clicando no icone chama a função
     methods: {
         toggleMenu() {
+            this.$store.commit('toggleMenu')    // acessa a store e comita essa alteração
         }
     }
 }
@@ -36,7 +40,7 @@ export default {
     .header {
         grid-area: header;
         background: linear-gradient(to right, rgb(71, 29, 143), rgb(125, 49, 145));
-        
+
         display: flex;
         /* display flex por padrão ele é na linha(row), justificando o conteudo na linha */
         justify-content: center;
@@ -45,12 +49,12 @@ export default {
 
     .title {
         font-size: 1.2rem;
-        color: #00FFFF;
+        color: rgb(138, 255, 255);
         /* fonte ficar mais fina */
         font-weight: 100;
-        /* titulo possa crescer dentro do flex-container */
+        /* título possa crescer dentro do flex-container */
         flex-grow: 1;
-        text-align: center
+        text-align: center;
     }
 
     .title a {
@@ -60,6 +64,7 @@ export default {
         text-decoration: none;
     }
 
+    /* estilo do toogleMenu */
     header.header > a.toggle {
         width: 60px;
         height: 100%;
@@ -75,6 +80,6 @@ export default {
 
     /* hover ao passar o mouse em cima do toggle */
     header.header > a.toggle:hover {
-        background-color: rgba(235, 19, 84, 0.3)
+        background-color: rgba(51, 48, 48, 0.733)
     }
 </style>

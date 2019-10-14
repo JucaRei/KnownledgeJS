@@ -21,6 +21,21 @@
     "vue2-editor": "2.6.6",
     "vuex": "3.0.1"
   },
+  "comentsDependencies": {
+    "axios": "Axios é o cliente HTTP",
+    "bootstrap-vue": "Tem algumas classes do bootstrap para usar no projeto",
+    "font-awesome": "biblioteca de fontes",
+    "highlightjs": "para quando for criar os artigos, tem a parte de highlight quando for colocar o codigo fonte no artigo",
+    "liquor-tree": "árvores para colocar as categorias",
+    "vue": "o próprio vue",
+    "vue-gravatar": "para colocar a imagem do usuario, como se fosse um logozinho",
+    "vue-mq": "parte de responsividade",
+    "vue-router": "para fazer as rotas",
+    "vue-toasted": "parte de mensagens",
+    "vue2-editor": "componente de dentro do cadastro de artigo( headers, itálico, citação, etc)",
+    "vuex": "parte de controle da store da aplicação (compartilhar dados entre componentes, mudar o estado)"
+
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "3.0.1",
