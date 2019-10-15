@@ -6,7 +6,11 @@ Vue.use(Vuex)
 // criar dados e as funções que vão manipular os dados, as mutations
 export default new Vuex.Store({
     state: {
-        isMenuVisible: true
+        isMenuVisible: true,
+        user: {
+            name: 'Usuário Mock',
+            email: 'mock@cod3r.com.br'
+        }
     },
     mutations: {       // estado do menu (toggle)
         toggleMenu(state, isVisible) {

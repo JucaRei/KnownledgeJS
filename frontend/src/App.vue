@@ -1,7 +1,10 @@
 <template>
 	<div id="app" :class="{'hide-menu': !isMenuVisible}">	<!-- classe css, se o menu não estiver visivel aplica altomaticamente esse classe CSS-->
 		<!-- :hideToggle interpretar o valor -->
-		<Header title="Projeto de aplicação dos Conhecimentos - Cod3r" :hideToggle="false"/>
+		<Header title="Projeto de aplicação dos Conhecimentos - Cod3r"
+			:hideToggle="false"
+			:hideUserDropdown="false" />
+
 		<Menu />
 		<Content />
 		<Footer />

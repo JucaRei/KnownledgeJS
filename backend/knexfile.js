@@ -21,9 +21,8 @@ module.exports = {
   client: "postgresql",
   debug: true,
   connection: {
-    host: "db",
-    database: "knownledge",
-    port: 54320,
+    database: "knowledge",
+    port: 5432,
     user: "postgres",
     password: "123",
   },

@@ -6,18 +6,23 @@
       </a>
       <!-- referenciando o title de app.vue -->
       <h1 class="title">
-          {{ title }}
+          <router-link to="/">{{ title }}</router-link>
       </h1>
+      <UserDropdown v-if="!hideUserDropdown"/>
   </header>
 </template>
 
 <script>
+import UserDropdown from './UserDropdown'
+
 export default {
     name: 'Header',
+    components: { UserDropdown },
     props: {
         title: String,
         // toogle não vai aparecer
-        hideToggle: Boolean
+        hideToggle: Boolean,
+        hideUserDropdown: Boolean  // exemplo situação de login
     },
     // icone toggle do font awesome
     computed: {
@@ -59,9 +64,14 @@ export default {
 
     .title a {
         /* tirar a cor dos links padrão que é azul */
-        color: #FFF;
+        color: rgb(138, 255, 255);
         /* quando colocar o mouse por cima não ficar com nenhuma cara de link */
         text-decoration: none;
+    }
+
+    .title a:hover{
+        color: rgb(138, 255, 255);
+        text-decoration: none
     }
 
     /* estilo do toogleMenu */
@@ -80,6 +90,7 @@ export default {
 
     /* hover ao passar o mouse em cima do toggle */
     header.header > a.toggle:hover {
+        color: rgb(253, 249, 0);
         background-color: rgba(51, 48, 48, 0.733)
     }
 </style>
