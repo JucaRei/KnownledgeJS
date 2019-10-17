@@ -34,7 +34,6 @@
     "vue-toasted": "parte de mensagens",
     "vue2-editor": "componente de dentro do cadastro de artigo( headers, itálico, citação, etc)",
     "vuex": "parte de controle da store da aplicação (compartilhar dados entre componentes, mudar o estado)"
-
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

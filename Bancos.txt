@@ -1,0 +1,10 @@
+Postgresql:
+docker run --name postgresql -e POSTGRES_PASSWORD=123 -d -p 5432:5432 postgres:alpine
+
+docker exec -it postgresql psql -U postgres
+
+
+Mongo:
+docker run -d -p 27017:27017 -p 28017:28017 -e AUTH=no --name mongodb mvertes/alpine-mongo
+
+docker exec -it mongodb mongo
