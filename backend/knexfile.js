@@ -27,8 +27,14 @@ module.exports = {
     password: "123",
   },
   pool: {
-    min: 2,
-    max: 10
+    min: 5,
+    max: 20,
+    // createTimeoutMillis: 3000,
+    // acquireTimeoutMillis: 30000,
+    // idleTimeoutMillis: 30000,
+    // reapIntervalMillis: 1000,
+    // createRetryIntervalMillis: 100,
+    // propagateCreateError: false
   },
   migrations: {
     tableName: "knex_migrations"

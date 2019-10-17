@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 networks:
   banco:
     driver: bridge
@@ -9,29 +9,6 @@ networks:
   backend:
     driver: bridge
 services:
-  db:
-    image: postgres:10.10-alpine
-    container_name: "postgreSQL"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "123"
-      POSTGRES_DB: "knownledge"
-    # volumes:
-    #   - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - 54320:5432
-    networks:
-      - banco
-  banconosql:
-    image: mvertes/alpine-mongo:latest
-    restart: always
-    container_name: "mongodb"
-    environment:
-      MONGO_INITDB_DATABASE: "knowledge_stats"
-    ports:
-      - 27017:27017
-    networks:
-      - banconosql
   frontend:
     image: frontend:latest
     container_name: "web"
@@ -67,3 +44,28 @@ services:
     links:
       - db
       - banconosql
+  db:
+    image: postgres:alpine
+    container_name: "postgreSQL"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "123"
+      POSTGRES_DB: "knowledge"
+    # volumes:
+    #   - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    networks:
+      - banco
+  banconosql:
+    image: mvertes/alpine-mongo:latest
+    restart: always
+    container_name: "mongodb"
+    environment:
+      MONGO_INITDB_DATABASE: "knowledge_stats"
+    ports:
+      - 27017:27017
+      - 28017:28017
+    networks:
+      - banconosql
+    command: mongod --noauth
