@@ -18,8 +18,8 @@
 // };
 
 module.exports = {
-  client: "postgresql",
-  debug: true,
+  client: "postgres",
+  debug: false,
   connection: {
     database: "knowledge",
     port: 5432,
@@ -27,8 +27,8 @@ module.exports = {
     password: "123",
   },
   pool: {
-    min: 5,
-    max: 20,
+    min: 2,
+    max: 10,
     // createTimeoutMillis: 3000,
     // acquireTimeoutMillis: 30000,
     // idleTimeoutMillis: 30000,
