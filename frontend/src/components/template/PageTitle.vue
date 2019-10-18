@@ -1,4 +1,5 @@
 <template>
+<!-- icones fonte awesome, com o titulo -->
   <div class="page-title">
     <h1><i v-if="icon" :class="icon"></i>{{ main }}</h1>
     <h2>{{ sub }}</h2>

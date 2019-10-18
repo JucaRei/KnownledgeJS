@@ -1,6 +1,7 @@
 <template>
     <div class="home">
         <PageTitle icon="fa fa-home" main="Dashboard" sub="Base de Conhecimento" />
+        <!-- icones stats da aplicação -->
         <div class="stats">
             <Stat title="Categorias" :value="stat.categories"
             icon="fa fa-folder" color="#d54d50" />
