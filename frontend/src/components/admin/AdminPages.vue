@@ -1,6 +1,6 @@
 <template>
   <div class="admin-pages">
-    <PageTitle icon="fa fa-cogs" main="Administração do Sistema" sub="Cadastros & Cia" />
+    <PageTitle icon="fa fa-user-secret" main="Administração do Sistema" sub="Cadastros & Cia" />
     <div class="admin-pages-tabs">
       <!-- b-card - é uma classe do vue bootstrap -->
       <b-card no-body>
@@ -34,5 +34,4 @@ export default {
 </script>
 
 <style>
-
 </style>

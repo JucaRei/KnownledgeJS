@@ -2,7 +2,7 @@
   <header class="header">
       <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
           <!-- font-awesome, propriedade disponivel dentro do componente -->
-          <i class="fa fa-lg" :class="icon"></i>
+          <i class="fa fa-gears" :class="icon"></i>
       </a>
       <!-- referenciando o title de app.vue -->
       <h1 class="title">
@@ -28,8 +28,8 @@ export default {
     computed: {
         icon() {
             // return "fa-angle-left"
-            // alternando o icone (um animação simple, de quando mostra ou não o menu)
-            return this.$store.state.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
+            // alternando o icone (um animação simples, de quando mostra ou não o menu)
+            return this.$store.state.isMenuVisible ? "fa-chevron-circle-right" : "fa-chevron-circle-down"
         }
     },
     // clicando no icone chama a função
@@ -44,7 +44,7 @@ export default {
 <style>
     .header {
         grid-area: header;
-        background: linear-gradient(to right, rgb(71, 29, 143), rgb(125, 49, 145));
+        background: linear-gradient(to right, rgb(40, 5, 194), rgb(81, 0, 104));
 
         display: flex;
         /* display flex por padrão ele é na linha(row), justificando o conteudo na linha */

@@ -1,122 +1,163 @@
 <template>
-  <div class="article-admin">
-    <b-form>
-      <input id="category-id" type="hidden" v-model="article.id" />
-      <b-form-group label="Nome:" label-for="category-name">
-        <b-form-input
-          id="category-name"
-          type="text"
-          v-model="article.name"
-          required
-          :readonly="mode === 'remove'"
-          placeholder="Informe o Nome da Categoria..."
-        />
-      </b-form-group>
-      <!-- Combo box, aponta para a categoria Pai daquele elemento -->
-      <b-form-group label="Categoria Pai:" label-for="category-parentId">
-        <b-form-select v-if="mode === 'save'"
-          label
-          id="category-parentId"
-          :options="categories"
-          v-model="article.parentId"
-        />
-      </b-form-group>
-      <b-form-group label="Categoria Pai:" label-for="category-parentId">
-
-      </b-form-group>
-      <b-button variant="primary" v-if="mode === 'save'" @click="save">Salvar</b-button>
-      <b-button variant="danger" v-if="mode === 'remove'" @click="remove">Excluir</b-button>
-      <b-button class="ml-2" @click="reset">Cancelar</b-button>
-    </b-form>
-    <hr />
-    <b-table hover striped :items="categories" :fields="fields">
-      <template slot="actions" slot-scope="data">
-        <b-button variant="warning" @click="loadCategory(data.item)" class="mr-2">
-          <i class="fa fa-pencil"></i>
-        </b-button>
-        <b-button variant="danger" @click="loadCategory(data.item, 'remove')">
-          <i class="fa fa-trash"></i>
-        </b-button>
-      </template>
-    </b-table>
-  </div>
+    <div class="article-admin">
+        <b-form>
+            <input id="article-id" type="hidden" v-model="article.id" />
+            <b-form-group label="Nome:" label-for="article-name">
+                <b-form-input id="article-name" type="text"
+                    v-model="article.name" required
+                    :readonly="mode === 'remove'"
+                    placeholder="Informe o Nome do Artigo..." />
+            </b-form-group>
+            <b-form-group label="Descrição" label-for="article-description">
+                <b-form-input id="article-description" type="text"
+                    v-model="article.description" required
+                    :readonly="mode === 'remove'"
+                    placeholder="Informe o Nome do Artigo..." />
+            </b-form-group>
+            <b-form-group v-if="mode === 'save'"
+                label="Imagem (URL):" label-for="article-imageUrl">
+                <b-form-input id="article-imageUrl" type="text"
+                    v-model="article.imageUrl" required
+                    :readonly="mode === 'remove'"
+                    placeholder="Informe a URL da Imagem..." />
+            </b-form-group>
+            <!-- Combo box, aponta para a categoria Pai daquele elemento -->
+            <b-form-group v-if="mode === 'save'"
+                label="Categoria:" label-for="article-categoryId">
+                 <!-- o form group só aparece se for no modo salvar -->
+                <b-form-select id="article-categoryId"
+                    :options="categories" v-model="article.categoryId" />
+            </b-form-group>
+            <b-form-group v-if="mode === 'save'"
+                label="Autor:" label-for="article-userId">
+                <b-form-select id="article-userId"
+                    :options="users" v-model="article.userId" />
+            </b-form-group>
+            <b-form-group v-if="mode === 'save'"
+                label="Conteúdo:" label-for="article-content">
+                <VueEditor v-model="article.content"
+                    placeholder="Informe o Conteúdo do Artigo..." />
+            </b-form-group>
+            <b-button variant="primary" v-if="mode === 'save'"
+                @click="save">Salvar</b-button>
+            <b-button variant="danger" v-if="mode === 'remove'"
+                @click="remove">Excluir</b-button>
+            <b-button class="ml-2" @click="reset">Cancelar</b-button>
+        </b-form>
+        <hr>
+        <b-table hover striped :items="articles" :fields="fields">
+            <template slot="actions" slot-scope="data">
+                <b-button variant="warning" @click="loadArticle(data.item)" class="mr-2">
+                    <i class="fa fa-pencil"></i>
+                </b-button>
+                <b-button variant="danger" @click="loadArticle(data.item, 'remove')">
+                    <i class="fa fa-trash"></i>
+                </b-button>
+            </template>
+        </b-table>
+        <!-- paginação -->
+        <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+    </div>
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor'
-import { baseApiUrl, showError } from "@/global";
-import axios from "axios";
+import { VueEditor } from "vue2-editor"
+import { baseApiUrl, showError } from '@/global'
+import axios from 'axios'
 
 export default {
-  name: "ArticleAdmin",
-  // registrar o componente
-  componentes: { VueEditor },
-  data: function() {
-    return {
-      mode: "save",
-      article: {},
-      articles: [],
-      categories: [],   // precisa ter categorias (comboBox) e usuarios
-      users: [],
-      // consulta paginada
-      page: 1,
-      limit: 0,
-      count: 0, //paginador
-      fields: [
-        { key: "id", label: "Código", sortable: true },
-        { key: "name", label: "Nome", sortable: true },
-        { key: "path", label: "Caminho", sortable: true },
-        { key: "actions", label: "Ações" }
-      ]
-    };
-  },
-  methods: {
-    loadCategories() {
-      const url = `${baseApiUrl}/categories`;
-      axios.get(url).then(res => {
-        // this.categories = res.data
-        // Combo box - usar os atributos padrão
-        this.categories = res.data.map(category => {
-          return { ...category, value: category.id, text: category.path };
-          // path coloca no texto do combo box, e o value seleciona o id quando usar o combo box(mostra com o caminho correto)
-        });
-      });
+    name: 'ArticleAdmin',
+    components: { VueEditor },
+    data: function() {
+        return {
+            mode: 'save',
+            article: {},
+            articles: [],
+            categories: [],
+            // precisa ter categorias (preencher o comboBox de categorias)
+            users: [],
+            // consulta paginada
+            page: 1,
+            limit: 0, // quantos elementos apareceram em cada 1 das páginas
+            count: 0, //quantas páginas preciso criar no paginador
+            fields: [
+                { key: 'id', label: 'Código', sortable: true },
+                { key: 'name', label: 'Nome', sortable: true },
+                { key: 'description', label: 'Descrição', sortable: true },
+                { key: 'actions', label: 'Ações' }
+            ]
+        }
     },
-    reset() {
-      this.mode = "save";
-      this.category = {};
-      this.loadCategories();
+    methods: {
+        loadArticles() {
+            const url = `${baseApiUrl}/articles?page=${this.page}`    // page (watch)
+            axios.get(url).then(res => {
+                // this.articles = res.data
+                this.articles = res.data.data
+                this.count = res.data.count
+                this.limit = res.data.limit
+            })
+        },
+        reset() {
+            this.mode = 'save'
+            this.article = {}
+            this.loadArticles()
+        },
+        save() {
+            const method = this.article.id ? 'put' : 'post'
+            const id = this.article.id ? `/${this.article.id}` : ''
+            axios[method](`${baseApiUrl}/articles${id}`, this.article)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.reset()
+                })
+                .catch(showError)
+        },
+        remove() {
+            const id = this.article.id
+            axios.delete(`${baseApiUrl}/articles/${id}`)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.reset()
+                })
+                .catch(showError)
+        },
+        loadArticle(article, mode = 'save') {
+            this.mode = mode
+            //this.article = {...article }
+            axios.get(`${baseApiUrl}/articles/${article.id}`)   // artigo com id traz o conteúdo completo
+                .then(res => this.article = res.data)
+        },
+        loadCategories() {
+            const url = `${baseApiUrl}/categories`
+            axios.get(url).then(res => {
+                this.categories = res.data.map(category => {
+                    return { value: category.id, text: category.path }
+                })
+            })
+        },
+        loadUsers() {
+            const url = `${baseApiUrl}/users`
+            axios.get(url).then(res => {
+                this.users = res.data.map(user => {
+                    return { value: user.id, text: `${user.name} - ${user.email}` }
+                })
+            })
+        }
     },
-    save() {
-      const method = this.category.id ? "put" : "post";
-      const id = this.category.id ? `/${this.category.id}` : "";
-      axios[method](`${baseApiUrl}/categories${id}`, this.category)
-        .then(() => {
-          this.$toasted.global.defaultSuccess();
-          this.reset();
-        })
-        .catch(showError);
+    watch: {
+        page() {
+            this.loadArticles()
+        }
     },
-    remove() {
-      const id = this.category.id;
-      axios
-        .delete(`${baseApiUrl}/categories/${id}`)
-        .then(() => {
-          this.$toasted.global.defaultSuccess();
-          this.reset();
-        })
-        .catch(showError);
-    },
-    loadCategory(category, mode = "save") {
-      this.mode = mode;
-      this.category = { ...category };
+    mounted() {
+        this.loadUsers()
+        this.loadCategories()
+        this.loadArticles()
     }
-  },
-  mounted() {
-    this.loadCategories();
-  }
-};
+}
 </script>
 
 <style>
+
 </style>

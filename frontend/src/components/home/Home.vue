@@ -4,11 +4,11 @@
         <!-- icones stats da aplicação -->
         <div class="stats">
             <Stat title="Categorias" :value="stat.categories"
-            icon="fa fa-folder" color="#d54d50" />
+            icon="fa fa-database" color="#db100d" />
             <Stat title="Artigos" :value="stat.articles"
-            icon="fa fa-file" color="#3bc480" />
+            icon="fa fa-file-text" color="#5620e8" />
             <Stat title="Usuários" :value="stat.users"
-            icon="fa fa-user" color="#3282cd" />
+            icon="fa fa-users" color="#9d0ddb" />
         </div>
     </div>
 </template>

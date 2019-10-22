@@ -5,7 +5,7 @@
             <div class="user-dropdown-img">
                 <Gravatar :email="user.email" alt="User" /> <!-- Avatar do usuario(store.js) -->
             </div>
-            <i class="fa fa-angle-down"></i>
+            <i class="fa fa-caret-down"></i>
         </div>
         <!-- itens -->
         <div class="user-dropdown-content">

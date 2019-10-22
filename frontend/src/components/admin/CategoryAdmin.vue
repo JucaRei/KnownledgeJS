@@ -19,7 +19,7 @@
           v-if="mode === 'save'"
           id="category-parentId"
           :options="categories"
-          v-model="category.path"
+          v-model="category.parentId"
         />
         <b-form-input v-else id="category-parentId" type="text" v-model="category.path" readonly />
       </b-form-group>
