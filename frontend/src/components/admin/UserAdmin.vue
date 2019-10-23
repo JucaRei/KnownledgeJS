@@ -29,7 +29,7 @@
             <!-- linha do formulário -->
             <b-form-checkbox id="user-admin" v-show="mode === 'save'"
                 v-model="user.admin" class="mt-3 mb-3">
-                Administrador?
+                Usuário é Administrador?
             </b-form-checkbox>
             <b-row v-show="mode === 'save'">
                 <b-col md="6" sm="12">
