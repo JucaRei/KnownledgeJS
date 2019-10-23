@@ -28,7 +28,7 @@
             <!-- mt3 (margin top 3) bt3 (margin bottom 3) -->
             <!-- linha do formulário -->
             <b-form-checkbox id="user-admin" v-show="mode === 'save'"
-                v-model="user.admin" class="mt-3 mb-3">
+                v-model="user.admin" class="mt-3 mb-3" >
                 Usuário é Administrador?
             </b-form-checkbox>
             <b-row v-show="mode === 'save'">
@@ -71,10 +71,10 @@
             <template slot="actions" slot-scope="data">
               <!-- botões para mudar ou excluir usuario -->
                 <b-button variant="warning" @click="loadUser(data.item)" class="mr-2">
-                    <i class="fa fa-pencil"></i>
+                    <i class="fa fa-pencil-square-o"></i>
                 </b-button>
                 <b-button variant="danger" @click="loadUser(data.item, 'remove')">
-                    <i class="fa fa-trash"></i>
+                    <i class="fa fa-trash-o"></i>
                 </b-button>
             </template>
         </b-table>
