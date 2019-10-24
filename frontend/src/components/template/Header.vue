@@ -29,7 +29,7 @@ export default {
         icon() {
             // return "fa-angle-left"
             // alternando o icone (um animação simples, de quando mostra ou não o menu)
-            return this.$store.state.isMenuVisible ? "fa-chevron-circle-right" : "fa-chevron-circle-down"
+            return this.$store.state.isMenuVisible ? "fa-chevron-circle-down" : "fa-chevron-circle-right"
         }
     },
     // clicando no icone chama a função

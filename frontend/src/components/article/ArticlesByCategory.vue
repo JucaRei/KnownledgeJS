@@ -4,7 +4,8 @@
     <ul>
         <!-- key é uma chave única -->
         <li v-for="article in articles" :key="article.id" >
-            {{ article.name }}
+          <!-- para cada iteração, vai renderizar o componente -->
+            <ArticleItem :article="article" />
         </li>
     </ul>
     <div class="load-more">
@@ -22,10 +23,11 @@
 import { baseApiUrl } from "@/global";
 import axios from "axios";
 import PageTitle from "../template/PageTitle";
+import ArticleItem from './ArticleItem'
 
 export default {
   name: "ArticlesByCategory",
-  components: { PageTitle },
+  components: { PageTitle, ArticleItem },
   data: function() {
     return {
       category: {},
@@ -49,7 +51,20 @@ export default {
             if(res.data.length === 0) this.loadMore = false         // se não tiver mais dados, não aparece o loadmore
         })
     }
-  }, //montar o componente para exibir na tela
+  },
+  // monitorar o componente de rotas
+  watch: {
+    $route(to) {
+      this.category.id = to.params.id
+      this.articles = []  // zerar o array de artigos
+      this.page = 1       // zerar o atributo page
+      this.loadMore = true
+
+      this.getCategory()
+      this.getArticles()
+    }
+  },
+  //montar o componente para exibir na tela
   mounted() {
     //   console.log(this.$route.params.id)
     this.category.id = this.$route.params.id;
