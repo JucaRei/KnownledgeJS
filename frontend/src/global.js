@@ -1,5 +1,13 @@
+/* - local storage do browser que é uma área de armazenamento de valores textuais, chave e valor,
+que é persistida mesmo quando o browser fecha.
+- aquilo que retornar do login, vai armazenar no local storage */
+
+// local Storage
+export const userKey = '__knowledge_user' // pode ser o nome que quiser
 // quando for pra produção substitui a api pelo endereço da produção
 export const baseApiUrl = 'http://localhost:3000'
+
+
 
 // quando tiver um catch exibir a mensagem de erro para o usuário
 import Vue from 'vue'
@@ -14,4 +22,4 @@ export function showError(e) {
     }
 }
 
-export default { baseApiUrl, showError }
+export default { baseApiUrl, showError, userKey }

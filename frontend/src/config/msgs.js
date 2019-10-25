@@ -11,14 +11,13 @@ Vue.use(Toasted, {     // biblioteca de icones font awesome
 //mensagem padrão de sucesso ou de erro
 Vue.toasted.register(
     'defaultSuccess',
-    payload => !payload.msg ? 'Operação realizada com sucesso' : payload.msg,
-    // 'Operação realizada com sucesso',
+    payload => !payload.msg ? 'Operação realidada com sucesso!' : payload.msg,
     { type: 'success', icon: 'check' }
 )
 
+//erro
 Vue.toasted.register(
     'defaultError',
-    // erro
     payload => !payload.msg ? 'Oops.. Erro inesperado.' : payload.msg,
-    { type: 'error', icon: 'times' }
+    { type : 'error', icon : 'times' }
 )

@@ -13,12 +13,14 @@
             <router-link to="/admin">
                 <i class="fa fa-cogs">Administração</i>
             </router-link>
-            <a href><i class="fa fa-sign-out">Sair</i></a>
+            <a href @click.prevent="logout"><i class="fa fa-sign-out"></i> Sair</a>
         </div>
     </div>
 </template>
 
 <script>
+// logout exclui o token do localstorage
+import { userKey } from '@/global'
 import { mapState } from 'vuex'
 import Gravatar from 'vue-gravatar'
 
@@ -26,7 +28,14 @@ export default {
     // poder usar dentro do template
     name: 'UserDropdown',
     components: { Gravatar },
-    computed: mapState(['user'])
+    computed: mapState(['user']),
+    methods: {
+        logout() {
+            localStorage.removeItem(userKey)
+            this.$store.commit('setUser', null)      // setar nulo, automaticamente, esconde o menu
+            this.$router.push({ name: 'auth' })   // vai mandar pra rota/tela de autenticação
+        }
+    }
 }
 </script>
 
