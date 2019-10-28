@@ -10,7 +10,7 @@
         <!-- itens -->
         <div class="user-dropdown-content">
             <!-- link router , ao clicar em administração ele vai pra pagina-->
-            <router-link to="/admin">
+            <router-link to="/admin" v-if="user.admin">
                 <i class="fa fa-cogs">Administração</i>
             </router-link>
             <a href @click.prevent="logout"><i class="fa fa-sign-out"></i> Sair</a>
@@ -31,7 +31,7 @@ export default {
     computed: mapState(['user']),
     methods: {
         logout() {
-            localStorage.removeItem(userKey)
+            localStorage.removeItem(userKey)        // tirar do localStorage
             this.$store.commit('setUser', null)      // setar nulo, automaticamente, esconde o menu
             this.$router.push({ name: 'auth' })   // vai mandar pra rota/tela de autenticação
         }

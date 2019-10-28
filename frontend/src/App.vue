@@ -9,8 +9,8 @@
     />
     <!-- se não tiver usuário, esconde o toggle e o dropdown -->
     <Menu v-if="user" />
-	<Loading v-if="validateToken" />
     <!-- Exibe o menu apenas se o usuário estiver logado-->
+    <Loading v-if="validatingToken" />
     <Content v-else />
     <Footer />
   </div>
@@ -24,23 +24,23 @@ import { baseApiUrl, userKey } from "@/global";
 import { mapState } from "vuex";
 // @ quer é a pasta raiz do projeto (src)
 import Header from "@/components/template/Header";
-import Menu from "./components/template/Menu";
-import Content from "./components/template/Content";
-import Footer from "./components/template/Footer";
-import Loading from '@/components/template/Loading'
+import Menu from "@/components/template/Menu";
+import Content from "@/components/template/Content";
+import Footer from "@/components/template/Footer";
+import Loading from "@/components/template/Loading";
 
 export default {
   name: "App",
   components: { Header, Menu, Content, Footer, Loading },
-  computed: mapState(["isMenuVisible", "user"]), // menu e usuário
+  computed: mapState(["isMenuVisible", "user"]), //menu e usuário
   data: function() {
+    // flag que vai dizer se está ou não validando o token, se der ok ele vai pra tela, senão volta pro login
     return {
-      // flag que vai dizer se está ou não validando o token, se der ok ele vai pra tela, senão volta pro login
       validatingToken: true
     };
   },
   methods: {
-    // validar o token
+    // validar token
     async validateToken() {
       this.validatingToken = true;
 
@@ -50,6 +50,7 @@ export default {
       const userData = JSON.parse(json);
       this.$store.commit("setUser", null); // default o usuário é null
 
+      // estando ok, seta o user na store
       if (!userData) {
         this.validatingToken = false;
         this.$router.push({ name: "auth" });
@@ -58,27 +59,32 @@ export default {
 
       const res = await axios.post(`${baseApiUrl}/validateToken`, userData);
 
-      // estando ok, seta o user na store
       if (res.data) {
         this.$store.commit("setUser", userData);
+
+        // Vue MQ
+        if (this.$mq === "xs" || this.$mq === "sm") {
+          this.$store.commit("toggleMenu", false); // se for dispositivo pequeno, fecha o menu automaticamente
+        }
       } else {
         localStorage.removeItem(userKey);
         this.$router.push({ name: "auth" });
       }
 
-      this.validateToken = false;
-	},
-	// created vem antes do mounted
-    created() {
-      this.validateToken();
+      this.validatingToken = false;
     }
+  },
+  // estando ok, seta o user na store
+  created() {
+    this.validateToken();
   }
 };
 </script>
 
 <style>
+/* fonte referenciada dentro de public/index.html */
+
 * {
-  /* fonte referenciada dentro de public/index.html */
   font-family: "Lato", sans-serif;
 }
 
@@ -101,8 +107,8 @@ body {
   /* 2 colunas, 300px - é onde vai ficar o menu da aplicação, e o 1fr o conteúdo da aplicação */
   grid-template-columns: 300px 1fr;
   /* definir as áreas e onde os componentes se encaixam, 1 linha o header - ocupar de ponta a ponta,
-		2 linha o menu do lado esquerdo e o conteúdo do lado direito, e
-		3 linha tem o menu com o footer*/
+		    2 linha o menu do lado esquerdo e o conteúdo do lado direito, e
+		    3 linha tem o menu com o footer*/
   grid-template-areas:
     "header header"
     "menu content"

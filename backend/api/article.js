@@ -57,7 +57,7 @@ module.exports = app => {
     - offset é o deslocamento que preciso fazer para trazer os dados
     - res.json({ data: articles, count, limit }))  atributo data - retorna artigo, a paginação com o limite de artigos por pagina
     */
-    const limit = 3 // usado para paginação
+    const limit = 10 // usado para paginação
     const get = async (req, res) => {
         const page = req.query.page || 1
 

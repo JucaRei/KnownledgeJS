@@ -7,6 +7,10 @@
 </template>
 
 <script>
+// aplicar estilo no codigo do artigo
+import 'highlightjs/styles/darcula.css'
+// biblioteca do highlight
+import hljs from 'highlightjs/highlight.pack.js'
 import { baseApiUrl } from '@/global'
 import axios from 'axios'
 import PageTitle from '../template/PageTitle'
@@ -22,6 +26,13 @@ export default {
     mounted() {
         const url = `${baseApiUrl}/articles/${this.$route.params.id}`
         axios.get(url).then(res => this.article = res.data)
+    },
+    // quando um componente for feito um update
+    updated() {
+        // usando JS, selecionando todas as tags 'pre', e aplica essa biblioteca (highlighr)
+        document.querySelectorAll('.article-content pre.ql-syntax').forEach(e =>{
+            hljs.highlightBlock(e)
+        })
     }
 }
 </script>

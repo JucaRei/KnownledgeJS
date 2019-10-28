@@ -55,6 +55,11 @@ export default {
         // id da categoria é o mesmo id do nó
         params: { id: node.id }
       })
+
+      // Vue MQ
+      if(this.$mq === 'xs' || this.$mq === 'sm') {
+        this.$store.commit('toggleMenu', false)   // se for dispositivo pequeno, fecha o menu automaticamente
+      }
     }
   },
   mounted() {

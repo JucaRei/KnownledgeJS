@@ -6,7 +6,8 @@ import './config/msgs'
 import store from './config/store'  //(vuex)  import o store e associar de app Vue
 import './config/bootstrap'   // carregar o arquivo de configuração
 import router from './config/router'  //rotas
-
+import './config/axios'
+import './config/mq'
 
 Vue.config.productionTip = false
 

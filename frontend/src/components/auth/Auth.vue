@@ -5,7 +5,7 @@
       <img src="@/assets/logo.png" width="200" alt="Logo" />
       <hr>
       <div class="auth-title">{{ showSignup ? 'Cadastro' : 'Login'}}</div>
-      <!-- so será exibido no cadastro -->
+      <!-- input que só será exibido no cadastro -->
       <input v-if="showSignup" v-model="user.name" type="text" placeholder="Nome" />
       <input v-model="user.email" name="email" type="text" placeholder="E-mail" />
       <input v-model="user.password" name="password" type="password" placeholder="Senha" />
