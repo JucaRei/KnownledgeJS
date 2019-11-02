@@ -107,8 +107,8 @@ body {
   /* 2 colunas, 300px - é onde vai ficar o menu da aplicação, e o 1fr o conteúdo da aplicação */
   grid-template-columns: 300px 1fr;
   /* definir as áreas e onde os componentes se encaixam, 1 linha o header - ocupar de ponta a ponta,
-		    2 linha o menu do lado esquerdo e o conteúdo do lado direito, e
-		    3 linha tem o menu com o footer*/
+	2 linha o menu do lado esquerdo e o conteúdo do lado direito, e
+	3 linha tem o menu com o footer*/
   grid-template-areas:
     "header header"
     "menu content"

@@ -3,7 +3,7 @@
     <!-- parecer um modal, que vai ter o formulário -->
     <div class="auth-modal">
       <img src="@/assets/logo.png" width="200" alt="Logo" />
-      <hr>
+      <hr />
       <div class="auth-title">{{ showSignup ? 'Cadastro' : 'Login'}}</div>
       <!-- input que só será exibido no cadastro -->
       <input v-if="showSignup" v-model="user.name" type="text" placeholder="Nome" />
@@ -21,8 +21,8 @@
       <!-- link que fica alterando o valor showsignup de falso para verdadeiro -->
       <!-- click prevent - previnir o comportamento padrão   -->
       <a href @click.prevent="showSignup = !showSignup">
-          <span v-if="showSignup">Já tem cadastro? Faça o login!</span>
-          <span v-else>Não tem cadastro? Registre-se aqui!</span>
+        <span v-if="showSignup">Já tem cadastro? Faça o login!</span>
+        <span v-else>Não tem cadastro? Registre-se aqui!</span>
       </a>
     </div>
   </div>
@@ -80,7 +80,7 @@ export default {
 }
 
 .auth-modal {
-  background: #fff;
+  background: rgba(209, 201, 201, 0.589);
   width: 350px;
   /* padding interno, para os elementos não ficarem grudados nas laterais */
   padding: 35px;
@@ -89,47 +89,57 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 22%;
+
+  box-shadow: 1px 1px 5px;
 }
 
-.auth-title{
-    font-size: 1.3rem;
-    font-weight: 100;
-    margin-top: 8px;
-    margin-bottom: 15px;
+.auth-title {
+  font-size: 1.3rem;
+  font-weight: 100;
+  margin-top: 8px;
+  margin-bottom: 15px;
 }
 
-.auth-modal input{
-    border: 1px solid #BBB;
-    width: 100%;
-    margin-bottom: 12px;
-    /* espaçamento tambem em relação ao texto interno */
-    padding: 3px;
-    /* tirar linha azul ao clicar */
-    outline: none;
+.auth-modal input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 12px;
+  /* espaçamento tambem em relação ao texto interno */
+  padding: 3px;
+  /* tirar linha azul ao clicar */
+  outline: none;
 }
 
-.auth-modal button{
-    align-self: flex-end;
-    background-color: #2460ae;
-    color: #fff;
-    /* aumentando o tamanho do botão */
-    padding: 5px 15px;
-    border-color: rgb(0, 0, 0, 0.1);
-    border-radius: 5%;
-    margin-top: 5px;
+.auth-modal button {
+  align-self: flex-end;
+  background-color: #2460ae;
+  color: #fff;
+  /* aumentando o tamanho do botão */
+  padding: 5px 15px;
+  border-color: rgb(0, 0, 0, 0.1);
+  border-radius: 5%;
+  margin-top: 5px;
 }
 
-.auth-modal a{
-    margin-top: 25px;
+.auth-modal a {
+  margin-top: 25px;
 }
 
 .auth-modal hr {
-        border: 0;
-        width: 100%;
-        height: 1px;
-        background-image: linear-gradient(to right,
-            rgba(120, 120, 120, 0),
-            rgba(120, 120, 120, 0.75),
-            rgba(120, 120, 120, 0));
-    }
+  border: 0;
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(120, 120, 120, 0),
+    rgba(120, 120, 120, 0.75),
+    rgba(120, 120, 120, 0)
+  );
+}
+.auth-modal a span {
+  font-style: oblique;
+  font-weight: bold;
+  outline: none;
+}
 </style>
