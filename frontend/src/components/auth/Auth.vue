@@ -80,7 +80,7 @@ export default {
 }
 
 .auth-modal {
-  background: rgba(209, 201, 201, 0.589);
+  background: rgba(209, 201, 201, 0.34);
   width: 350px;
   /* padding interno, para os elementos não ficarem grudados nas laterais */
   padding: 35px;
