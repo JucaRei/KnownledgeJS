@@ -21,7 +21,7 @@ module.exports = {
   client: "postgres",
   debug: false,
   connection: {
-    host: "192.168.99.100",
+    host: "127.0.0.1",
     database: "knowledge",
     port: 5432,
     user: "postgres",
@@ -38,8 +38,8 @@ module.exports = {
     // propagateCreateError: false
   },
   migrations: {
-    tableName: "knex_migrations"
-  }
+    tableName: "knex_migrations",
+  },
 };
 
 /**
